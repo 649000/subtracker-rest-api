@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,9 +26,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonApiId
-    private UUID userID;
+    private String userID;
 
     @JsonProperty
+    @NotNull
+    @NotEmpty
     @Column(nullable = false)
     private String name;
 
@@ -39,9 +41,19 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private boolean isEmailVerified;
+
+    @Column(nullable = false)
+    private String issuer;
+
     @CreatedDate
     private Date createdDate;
 
     @LastModifiedDate
     private Date modifiedDate;
+
+    @OneToMany
+    @JoinColumn(name = "userID")
+    private List<Subscription> subList;
 }

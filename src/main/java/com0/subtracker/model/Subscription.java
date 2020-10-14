@@ -9,9 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.UUID;
@@ -27,21 +26,17 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonApiId
     @NotNull
-    @NotBlank
-    @NotEmpty
     private UUID subscriptionID;
 
     @CreatedDate
     @JsonProperty
     @NotNull
-    @NotBlank
-    @NotEmpty
     @Column(nullable = false)
     private LocalDate createdDate;
 
     @LastModifiedDate
-    @Column
     @JsonProperty
+    @Column
     private LocalDate modifiedDate;
 
     @JsonProperty
@@ -53,23 +48,20 @@ public class Subscription {
 
     @JsonProperty
     @NotNull
-    @NotBlank
-    @NotEmpty
     @Column(nullable = false)
     private Currency currency;
 
     @JsonProperty
     @NotNull
-    @NotBlank
-    @NotEmpty
-    @Column(nullable = false)
-    private double amount;
+    @PositiveOrZero
+    @Digits(integer = 10, fraction = 2)
+    @Column
+    private BigDecimal amount;
 
     //In days: 1 = 1 day, 30 = 1 month
     @JsonProperty
     @NotNull
-    @NotBlank
-    @NotEmpty
+    @PositiveOrZero
     @Column(nullable = false)
     private int cycle;
 
