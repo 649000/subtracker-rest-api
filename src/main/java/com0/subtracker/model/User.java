@@ -54,6 +54,6 @@ public class User {
     private Date modifiedDate;
 
     @OneToMany
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userID", nullable = false)
     private List<Subscription> subList;
 }
