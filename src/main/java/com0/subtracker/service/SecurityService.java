@@ -2,18 +2,15 @@ package com0.subtracker.service;
 
 import com0.subtracker.configuration.auth.firebase.Credentials;
 import com0.subtracker.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Component
 public class SecurityService {
-
-    @Autowired
-    private HttpServletRequest httpServletRequest;
-
 
     public User getUser() {
         User userPrincipal = null;
