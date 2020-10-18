@@ -24,7 +24,6 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonApiId
     private String userID;
 
