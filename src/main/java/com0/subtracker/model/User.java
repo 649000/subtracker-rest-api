@@ -52,7 +52,8 @@ public class User {
     @LastModifiedDate
     private Date modifiedDate;
 
-    @OneToMany
+    //TODO: What is cascadetype.all/fetchtype?
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "userID", nullable = false)
     private List<Subscription> subList;
 }
