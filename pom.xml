@@ -102,6 +102,10 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
+                    <!-- more config here as you see fit -->
+                </configuration>
             </plugin>
 
             <!--This is used to generate build.properties for actuator/info-->
