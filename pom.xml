@@ -120,4 +120,14 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-crnk-project-maven</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/crnk-project/maven</url>
+        </repository>
+    </repositories>
 </project>
