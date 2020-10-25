@@ -2,9 +2,9 @@ name: Feature Branch
 
 on:
   push:
-    branches: [ master, develop ]
-  pull_request:
-    types: [opened, synchronize, reopened]
+    branches-ignore:
+      - 'master'
+      - 'release*'
 
 jobs:
 
