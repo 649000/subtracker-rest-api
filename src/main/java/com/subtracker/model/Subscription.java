@@ -1,4 +1,4 @@
-package com0.subtracker.model;
+package com.subtracker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.crnk.core.resource.annotations.JsonApiId;

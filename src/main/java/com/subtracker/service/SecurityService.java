@@ -1,7 +1,7 @@
-package com0.subtracker.service;
+package com.subtracker.service;
 
-import com0.subtracker.configuration.auth.firebase.Credentials;
-import com0.subtracker.model.User;
+import com.subtracker.configuration.auth.firebase.Credentials;
+import com.subtracker.model.User;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

@@ -1,10 +1,10 @@
-package com0.subtracker.service;
+package com.subtracker.service;
 
-import com0.subtracker.exception.SubscriptionException;
-import com0.subtracker.model.Subscription;
-import com0.subtracker.model.User;
-import com0.subtracker.repository.SubscriptionRepository;
-import com0.subtracker.repository.UserRepository;
+import com.subtracker.exception.SubscriptionException;
+import com.subtracker.repository.UserRepository;
+import com.subtracker.model.Subscription;
+import com.subtracker.model.User;
+import com.subtracker.repository.SubscriptionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

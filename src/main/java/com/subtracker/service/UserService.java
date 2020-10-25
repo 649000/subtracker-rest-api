@@ -1,11 +1,11 @@
-package com0.subtracker.service;
+package com.subtracker.service;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
-import com0.subtracker.exception.UserException;
-import com0.subtracker.model.User;
-import com0.subtracker.repository.UserRepository;
+import com.subtracker.exception.UserException;
+import com.subtracker.repository.UserRepository;
+import com.subtracker.model.User;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

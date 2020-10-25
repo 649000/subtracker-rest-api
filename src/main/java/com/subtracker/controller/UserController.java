@@ -1,7 +1,7 @@
-package com0.subtracker.controller;
+package com.subtracker.controller;
 
-import com0.subtracker.model.User;
-import com0.subtracker.service.UserService;
+import com.subtracker.model.User;
+import com.subtracker.service.UserService;
 import io.crnk.core.exception.MethodNotAllowedException;
 import io.crnk.core.queryspec.QuerySpec;
 import io.crnk.core.repository.ResourceRepositoryBase;

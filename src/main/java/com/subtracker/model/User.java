@@ -1,4 +1,4 @@
-package com0.subtracker.model;
+package com.subtracker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.crnk.core.resource.annotations.JsonApiId;
@@ -53,7 +53,7 @@ public class User {
     private Date modifiedDate;
 
     //TODO: What is cascadetype.all/fetchtype?
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "userID", nullable = false)
     private List<Subscription> subList;
 }

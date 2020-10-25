@@ -1,4 +1,4 @@
-package com0.subtracker;
+package com.subtracker;
 
 class SubtrackerApplicationTests {
 

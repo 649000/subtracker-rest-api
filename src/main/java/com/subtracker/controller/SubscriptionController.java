@@ -1,8 +1,8 @@
-package com0.subtracker.controller;
+package com.subtracker.controller;
 
 
-import com0.subtracker.model.Subscription;
-import com0.subtracker.service.SubscriptionService;
+import com.subtracker.model.Subscription;
+import com.subtracker.service.SubscriptionService;
 import io.crnk.core.queryspec.QuerySpec;
 import io.crnk.core.repository.ResourceRepositoryBase;
 import io.crnk.core.resource.list.ResourceList;

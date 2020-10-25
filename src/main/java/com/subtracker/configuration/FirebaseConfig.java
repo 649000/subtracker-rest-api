@@ -1,4 +1,4 @@
-package com0.subtracker.configuration;
+package com.subtracker.configuration;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;

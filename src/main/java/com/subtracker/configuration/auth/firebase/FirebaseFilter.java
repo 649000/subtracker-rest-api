@@ -1,9 +1,9 @@
-package com0.subtracker.configuration.auth.firebase;
+package com.subtracker.configuration.auth.firebase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com0.subtracker.model.User;
+import com.subtracker.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,6 +67,7 @@ public class FirebaseFilter extends OncePerRequestFilter {
 //            user.setPicture(decodedToken.getPicture());
             user.setIssuer(decodedToken.getIssuer());
             user.setEmailVerified(decodedToken.isEmailVerified());
+            log.debug(user.toString());
         }
         return user;
     }

@@ -1,4 +1,4 @@
-package com0.subtracker.configuration.auth.firebase;
+package com.subtracker.configuration.auth.firebase;
 
 import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com0.subtracker.exception;
+package com.subtracker.exception;
 
 public class SubscriptionException extends Exception{
 

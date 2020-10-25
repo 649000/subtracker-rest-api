@@ -1,7 +1,7 @@
-package com0.subtracker.configuration;
+package com.subtracker.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com0.subtracker.configuration.auth.firebase.FirebaseFilter;
+import com.subtracker.configuration.auth.firebase.FirebaseFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

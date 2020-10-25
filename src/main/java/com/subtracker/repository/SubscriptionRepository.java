@@ -1,6 +1,6 @@
-package com0.subtracker.repository;
+package com.subtracker.repository;
 
-import com0.subtracker.model.Subscription;
+import com.subtracker.model.Subscription;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
