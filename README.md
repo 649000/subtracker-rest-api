@@ -1,10 +1,11 @@
 ## Project Name & Pitch
 
-#### Example:
+#### Subtracker
 
-TweetWorld 
 
-An application used to filter data form Twitter based on user preference, built with React, Redux, JavaScript, and CSS.
+An application used to track subscriptions based on user preference, built with React, Redux, JavaScript, and CSS.
+
+#### Technologies
 
 ## Project Status
 (only necessary if incomplete)
