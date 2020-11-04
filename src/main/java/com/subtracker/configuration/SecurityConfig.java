@@ -41,28 +41,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             @Override
             public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                  AuthenticationException e) throws IOException, ServletException {
-                Map<String, Object> errorObject = new HashMap<String, Object>();
-                int errorCode = 401;
+                Map<String, Object> errorObject = new HashMap<>();
                 errorObject.put("message", "Unauthorized access of protected resource, invalid credentials");
                 errorObject.put("error", HttpStatus.UNAUTHORIZED);
-                errorObject.put("code", errorCode);
+                errorObject.put("code", HttpStatus.UNAUTHORIZED.value());
                 errorObject.put("timestamp", new Timestamp(new Date().getTime()));
                 httpServletResponse.setContentType("application/json;charset=UTF-8");
-                httpServletResponse.setStatus(errorCode);
+                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
                 httpServletResponse.getWriter().write(objectMapper.writeValueAsString(errorObject));
             }
         };
     }
 
+    /**
+     *  Method defines which URL paths should be secured and which should not.
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Authorisation
-//       http.authorizeRequests().antMatchers("/").permitAll();
-        http.cors()//.configurationSource(corsConfigurationSource())
+        http.cors()
                 .and().csrf().disable().formLogin().disable()
                 .httpBasic().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and().authorizeRequests()
-//                .antMatchers(restSecProps.getAllowedPublicApis().stream().toArray(String[]::new)).permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and()
                 .addFilterBefore(firebaseFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -1,10 +1,12 @@
 package com.subtracker.configuration.auth.firebase;
 
+import com.google.api.Http;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.subtracker.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.http.HttpHeaders;
 
 
 @Component
@@ -24,8 +27,6 @@ public class FirebaseFilter extends OncePerRequestFilter {
     // This file will take in the AUTH code and decode it and check if its a valid AUTH code.
 
 
-    private static String HEADER_NAME = "Authorization";
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         verifyToken(httpServletRequest);
@@ -33,7 +34,8 @@ public class FirebaseFilter extends OncePerRequestFilter {
     }
 
     private void verifyToken(HttpServletRequest request) {
-        String authorization = request.getHeader(HEADER_NAME);
+
+        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
         FirebaseToken decodedToken = null;
         String bearerToken = null;
 
@@ -50,7 +52,6 @@ public class FirebaseFilter extends OncePerRequestFilter {
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (FirebaseAuthException e) {
-            e.printStackTrace();
             log.error("Firebase Exception:: ", e.getLocalizedMessage());
         }
 
@@ -64,7 +65,6 @@ public class FirebaseFilter extends OncePerRequestFilter {
             user.setUserID(decodedToken.getUid());
             user.setName(decodedToken.getName());
             user.setEmail(decodedToken.getEmail());
-//            user.setPicture(decodedToken.getPicture());
             user.setIssuer(decodedToken.getIssuer());
             user.setEmailVerified(decodedToken.isEmailVerified());
             log.debug(user.toString());
