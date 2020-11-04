@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     /**
      *  Method defines which URL paths should be secured and which should not.
+     *  Reference: https://docs.spring.io/spring-security/site/docs/current/reference/html5/
      * @param http
      * @throws Exception
      */
