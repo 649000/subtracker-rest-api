@@ -6,67 +6,45 @@ This particular repository host the backend aspect which is the REST API endpoin
 
 #### Technologies
 1. Spring Boot
-  1. Spring Data
-  2. Spring Security
+   1. Spring Data
+   2. Spring Security
 2. Lombok
 3. Maven
 4. Crnk - JSON API specification
 5. PostgreSQL
 6. Firebase Auth
+7. Docker
 
 
 ## Project Status
-(only necessary if incomplete)
 
-#### Example:
+This project is currently in development. The backend development is almost done, basic CRUD functionality with User and Subscription model is present. User authenticaton is also managed by Firebase. 
 
-This project is currently in development. Users can filter tweets by username and keyword and see visual data representation. Functionality to sort by additional parameters is in progress.
-
-## Project Screen Shot(s)
-
-#### Example:   
-
-[ PRETEND SCREEN SHOT IS HERE ]
-
-[ PRETEND OTHER SCREEN SHOT IS HERE ]
 
 ## Installation and Setup Instructions
 
-#### Example:  
-
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
-
-Installation:
-
-`npm install`  
+Clone the repository. 
 
 To Run Test Suite:  
 
-`npm test`  
+`mvn clean test`  
 
 To Start Server:
 
-`npm start`  
+`mvn spring-boot:run`  
 
-To Visit App:
+API endpoint:
 
-`localhost:3000/ideas`  
+`localhost:8080/api`  
 
 ## Reflection
 
-  - What was the context for this project? (ie: was this a side project? was this for Turing? was this for an experiment?)
-  - What did you set out to build?
-  - Why was this project challenging and therefore a really good learning experience?
-  - What were some unexpected obstacles?
-  - What tools did you use to implement this project?
-      - This might seem obvious because you are IN this codebase, but to all other humans now is the time to talk about why you chose webpack instead of create react app, or D3, or vanilla JS instead of a framework etc. Brag about your choices and justify them here.  
+The purpose of this project was to familiarise with the Spring Boot framework. In order to do, I decided to build a RESTful API service based on the Spring Boot framework alongside with other Spring projects such as Spring Data and Spring Security. 
 
-#### Example:  
+The challenging aspect of this project was the user authentication with Firebase Auth. When it came to user authentication, I had the option of rolling out my own implementation or using Identity as a Service product such as AWS Cognito, Auth0, or Firebase Auth. I have decided to go forth with using an Identity as a Service approach as I believe developers should avoid reinventing the wheel especially when it comes to the security aspects of a project. Rolling out my implementation would not be ideal as I might not cover all grounds which can potentially lead to security loopholes. 
 
-This was a 3 week long project built during my third module at Turing School of Software and Design. Project goals included using technologies learned up until this point and familiarizing myself with documentation for new features.  
+Using Spring Security, I was able to secure all of the endpoints. All endpoints will require a valid token provided by Firebase before a call can be made. 
 
-Originally I wanted to build an application that allowed users to pull data from the Twitter API based on what they were interested in, such as 'most tagged users'. I started this process by using the `create-react-app` boilerplate, then adding `react-router-4.0` and `redux`.  
-
-One of the main challenges I ran into was Authentication. This lead me to spend a few days on a research spike into OAuth, Auth0, and two-factor authentication using Firebase or other third parties. Due to project time constraints, I had to table authentication and focus more on data visualization from parts of the API that weren't restricted to authenticated users.
-
-At the end of the day, the technologies implemented in this project are React, React-Router 4.0, Redux, LoDash, D3, and a significant amount of VanillaJS, JSX, and CSS. I chose to use the `create-react-app` boilerplate to minimize initial setup and invest more time in diving into weird technological rabbit holes. In the next iteration I plan on handrolling a `webpack.config.js` file to more fully understand the build process.
+#### Tools used
+1. Postman  - to test the endpoints
+2. Intellij IDE
