@@ -18,7 +18,15 @@ This particular repository host the backend aspect which is the REST API endpoin
 
 ## Project Status
 
-This project is currently in development. The backend development is almost done, basic CRUD functionality with User and Subscription model is present. User authenticaton is also managed by Firebase. 
+This project is currently in development. 
+
+|Feature|Status  |
+|--|--|
+|CRUD on models|Completed  |
+|User authentication via Firebase Auth|Completed  |
+|Display results in JSON API| Completed
+| Deployed on Heroku| Completed
+|Deployed on AWS| Incomplete
 
 
 ## Installation and Setup Instructions
