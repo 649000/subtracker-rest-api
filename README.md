@@ -5,7 +5,9 @@ As many services are moving towards a subscription based revenue model, it becom
 This particular repository host the backend aspect which is the REST API endpoint.
 
 #### Technologies
-
+1. Spring Boot 2.0
+2. Crnk - JSON API specification
+3. PostgresSQL
 
 
 ## Project Status
