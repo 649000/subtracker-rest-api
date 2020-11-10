@@ -1,11 +1,12 @@
-## Project Name & Pitch
+## Subtracker
 
-#### Subtracker
+As many services are moving towards a subscription based revenue model, it becomes increasingly difficult for consumers to track the subscriptions one has signed up for. The aim of this application is to track subscriptions a user have, giving an overview on the subscription cost, subscription period and renewal date. 
 
-
-An application used to track subscriptions based on user preference, built with React, Redux, JavaScript, and CSS.
+This particular repository host the backend aspect which is the REST API endpoint.
 
 #### Technologies
+
+
 
 ## Project Status
 (only necessary if incomplete)
