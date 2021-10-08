@@ -1,6 +1,6 @@
 ## Subtracker
 
-As many services are moving towards a subscription based revenue model, it becomes increasingly difficult for consumers to track the subscriptions one has signed up for. The aim of this application is to track subscriptions a user have, giving an overview on the subscription cost, subscription period and renewal date. 
+As services are moving towards a subscription based revenue model, it becomes increasingly difficult for consumers to track the subscriptions one has signed up for. The aim of this application is to track subscriptions a user have, giving an overview on the subscription cost, subscription period and renewal date. 
 
 This particular repository host the backend aspect which is the REST API endpoint.
 
