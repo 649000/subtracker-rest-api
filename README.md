@@ -47,11 +47,11 @@ API endpoint:
 
 ## Reflection
 
-The purpose of this project was to familiarise with the Spring Boot framework. In order to do, I decided to build a RESTful API service based on the Spring Boot framework alongside with other Spring projects such as Spring Data and Spring Security. 
+The purpose of this project was to familiarise with the Spring Boot framework. In order to do so, I decided to build a RESTful API service based on the Spring Boot framework alongside with other Spring projects such as Spring Data and Spring Security. 
 
-The challenging aspect of this project was the user authentication with Firebase Auth. When it came to user authentication, I had the option of rolling out my own implementation or using Identity as a Service product such as AWS Cognito, Auth0, or Firebase Auth. I have decided to go forth with using an Identity as a Service approach as I believe developers should avoid reinventing the wheel especially when it comes to the security aspects of a project. Rolling out my implementation would not be ideal as I might not cover all grounds which can potentially lead to security loopholes. 
+The challenging aspect of this project was the user authentication with Firebase Auth. When it came to user authentication, I had the option of rolling out my own implementation or using Identity as a Service (IDaaS) product such as AWS Cognito, Auth0, or Firebase Auth. I have decided to go forth with using an IDaaS approach as I believe developers should avoid reinventing the wheel. Rolling out my implementation would not be ideal as I might overlook certain security aspects.
 
-Using Spring Security, I was able to secure all of the endpoints. All endpoints will require a valid token provided by Firebase before a call can be made. 
+Using Spring Security, I was able to secure all of the endpoints. All endpoints requires a valid token which is provided by Firebase.
 
 #### Tools used
 1. Postman  - to test the endpoints
