@@ -13,6 +13,9 @@ public class Subscription {
     private String subscriptionId;
 
     @NotNull
+    private String userId;
+
+    @NotNull
     private Date createdDate;
 
     @NotNull

@@ -6,6 +6,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
@@ -24,9 +26,10 @@ public class SubscriptionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Subscription createSubscription(@RequestBody Subscription request) {
+    public Subscription createSubscription(@RequestBody Subscription request, @AuthenticationPrincipal Jwt jwt) {
         log.debug("Request Object: {}", request.toString());
         try {
+            request.setUserId(jwt.getSubject());
             return subscriptionService.createSubscription(request);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
