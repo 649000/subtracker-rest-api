@@ -1,85 +1,97 @@
 package com.subtracker.service;
 
-import com.subtracker.exception.SubscriptionException;
-import com.subtracker.repository.UserRepository;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import com.subtracker.model.Subscription;
-import com.subtracker.model.User;
-import com.subtracker.repository.SubscriptionRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import lombok.NonNull;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-@Slf4j
 @Service
+@Slf4j
 public class SubscriptionService {
 
-    private SubscriptionRepository subscriptionRepository;
 
-    private SecurityService securityService;
+    private Firestore firestore;
 
-    private UserRepository userRepository;
+    private final String SUBSCRIPTION_TABLE = "subscription";
 
     @Autowired
-    public SubscriptionService(SubscriptionRepository subscriptionRepository, SecurityService securityService, UserRepository userRepository) {
-        this.subscriptionRepository = subscriptionRepository;
-        this.securityService = securityService;
-        this.userRepository = userRepository;
+    public SubscriptionService(Firestore firestore) {
+        this.firestore = firestore;
     }
 
-    /**
-     * Create a new subscription
-     * @param subscription
-     * @return
-     */
-    @Transactional
-    public Subscription create(@NonNull Subscription subscription) throws SubscriptionException {
-        User user = validUser();
-        user.getSubList().add(subscription);
-        return subscriptionRepository.save(subscription);
+    public Subscription createSubscription(@NonNull Subscription subscription) throws ExecutionException, InterruptedException {
+        ApiFuture<DocumentReference> addedDocRef = firestore.collection(SUBSCRIPTION_TABLE).add(subscription);
+        subscription.setSubscriptionId(addedDocRef.get().getId());
+        return subscription;
     }
 
-    @Transactional
-    public Subscription findOne(@NonNull UUID id) throws SubscriptionException {
-        Optional<Subscription> subscription = subscriptionRepository.findById(id);
-        if (subscription.isPresent()){
-            return subscription.get();
-        } else {
-            log.error("Subscription ID: {} doesn't exist", id);
-            throw new SubscriptionException(String.format("Subscription ID :'%s' does not exist in database", id.toString()));
+    public Iterable<Subscription> getSubscriptions() throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> future = firestore.collection(SUBSCRIPTION_TABLE).get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List<Subscription> subscriptionList = documents.stream().map(doc -> {
+                    Subscription subscription = doc.toObject(Subscription.class);
+                    subscription.setSubscriptionId(doc.getId());
+                    return subscription;
+                }
+        ).collect(Collectors.toList());
+        return subscriptionList;
+    }
+
+    public Subscription getSubscription(@NonNull final String subscriptionId) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = firestore.collection(SUBSCRIPTION_TABLE).document(subscriptionId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+        Subscription subscription = document.toObject(Subscription.class);
+        subscription.setSubscriptionId(document.getId());
+        return subscription;
+    }
+
+    public void deleteSubscription(@NonNull final String subscriptionId) {
+        ApiFuture<WriteResult> writeResult = firestore.collection(SUBSCRIPTION_TABLE).document(subscriptionId).delete();
+    }
+
+    public Subscription updateSubscription(@NonNull final String subscriptionId, @NonNull final Subscription request) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = firestore.collection(SUBSCRIPTION_TABLE).document(subscriptionId);
+        Map<String, Object> subUpdates = new HashMap<>();
+        subUpdates.put("modifiedDate", new Date());
+
+        if (StringUtils.isNotEmpty(request.getCurrency())) {
+            subUpdates.put("currency", request.getCurrency());
         }
-    }
 
-    @Transactional
-    public List<Subscription> findAll() throws SubscriptionException{
-        return validUser().getSubList();
-    }
-
-    @Transactional
-    public Subscription update(@NonNull Subscription subscription) throws SubscriptionException {
-        User user = validUser();
-        user.getSubList().add(subscription);
-        return subscriptionRepository.save(subscription);
-    }
-
-    @Transactional
-    public void delete(@NonNull UUID id){
-        subscriptionRepository.deleteById(id);
-    }
-
-    private User validUser() throws SubscriptionException {
-        String loggedInUserID = securityService.getUser().getUserID();
-        Optional<User> optionalUser = userRepository.findById(loggedInUserID);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        } else{
-            log.error("User {} does not exist in database");
-            throw new SubscriptionException(String.format("User ID :'%s' does not exist in database", loggedInUserID));
+        if (StringUtils.isNotEmpty(request.getServiceName())) {
+            subUpdates.put("serviceName", request.getServiceName());
         }
+
+        if (ObjectUtils.isNotEmpty(request.getMonthlyAmount())) {
+            subUpdates.put("monthlyAmount", request.getMonthlyAmount());
+        }
+
+        if (ObjectUtils.isNotEmpty(request.getYearlyAmount())) {
+            subUpdates.put("yearlyAmount", request.getYearlyAmount());
+        }
+
+        if (ObjectUtils.isNotEmpty(request.getContractualPeriod())) {
+            subUpdates.put("contractualPeriod", request.getContractualPeriod());
+        }
+
+        if (ObjectUtils.isNotEmpty(request.getNotes())) {
+            subUpdates.put("notes", request.getNotes());
+        }
+
+        docRef.update(subUpdates);
+        return request;
     }
 }
