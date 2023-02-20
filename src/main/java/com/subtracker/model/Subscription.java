@@ -5,29 +5,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Currency;
-import java.util.UUID;
+import java.util.Date;
 @Data
 @NoArgsConstructor
 public class Subscription {
 
-//    @NotNull
-    private UUID subscriptionID;
+    private String subscriptionId;
 
-//    @NotNull
-    private LocalDate createdDate;
+    @NotNull
+    private Date createdDate;
 
-//    @NotNull
-    private LocalDate modifiedDate;
+    @NotNull
+    private Date modifiedDate;
 
-//    @NotNull
+    @NotNull
     private String serviceName;
 
-//    @NotNull
-    private Currency currency;
+    @NotNull
+    private String currency;
 
-//    @NotNull
+    @NotNull
     private BigDecimal monthlyAmount;
     private BigDecimal yearlyAmount;
 
