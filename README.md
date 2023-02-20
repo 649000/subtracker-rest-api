@@ -13,32 +13,25 @@ This particular repository host the backend aspect which is the REST API endpoin
 6. Firebase Auth & Firestore
 
 
-## Project Status
-
-|Feature|Status  |
-|--|--|
-|CRUD on models|Completed  |
-|User authentication via Firebase Auth|Completed  |
-|Display results in JSON API| Completed
-| Deployed on Heroku| Completed
-
-
 ## Installation and Setup Instructions
+Firebase service account is required and must be set as an environment varibale
 
-Clone the repository. 
+Example on setting environment variable on macOS:
+```
+export GOOGLE_APPLICATION_CREDENTIAL=<JSON file goes here>
+```
 
-To Run Test Suite:  
+To run the service, navigate to the root of the project and execute the command
 
-`mvn clean test`  
-
-To Start Server:
-
-`mvn spring-boot:run`  
-
-API endpoint:
-
-`localhost:8080/api`  
-
+```
+mvn spring-boot:run
+```
+## Endpoints
+|          | localhost                                   | Railway                                                     |
+|----------|---------------------------------------------|-------------------------------------------------------------|
+| Open API | http://localhost:8080/swagger-ui/index.html | TBD |
+| Actuator | http://localhost:8080/actuator              | TBD              |
+| API      | http://localhost:8080/api                   | TBD              |
 ## Reflection
 
 The purpose of this project was to familiarise with the Spring Boot framework. In order to do so, I decided to build a RESTful API service based on the Spring Boot framework alongside with other Spring projects such as Spring Data and Spring Security. 
