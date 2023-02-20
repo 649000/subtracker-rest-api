@@ -6,14 +6,11 @@ This particular repository host the backend aspect which is the REST API endpoin
 
 #### Technologies
 1. Spring Boot
-   1. Spring Data
-   2. Spring Security
-2. Lombok
-3. Maven
-4. Crnk - JSON API specification
-5. PostgreSQL
-6. Firebase Auth
-7. Docker
+2. Spring Security
+3. Spring Boot OAuth2 Resource Server
+4. Lombok
+5. Maven
+6. Firebase Auth & Firestore
 
 
 ## Project Status
