@@ -1,58 +1,74 @@
 package com.subtracker.controller;
 
-
 import com.subtracker.model.Subscription;
 import com.subtracker.service.SubscriptionService;
-import io.crnk.core.queryspec.QuerySpec;
-import io.crnk.core.repository.ResourceRepositoryBase;
-import io.crnk.core.resource.list.ResourceList;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
-@Component
+@RestController
+@RequestMapping(value = "/api/subscription")
 @Slf4j
-public class SubscriptionController extends ResourceRepositoryBase<Subscription, UUID> {
+public class SubscriptionController {
 
-    private SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
 
     @Autowired
     public SubscriptionController(SubscriptionService subscriptionService) {
-        super(Subscription.class);
         this.subscriptionService = subscriptionService;
     }
 
-    @SneakyThrows
-    @Override
-    public Subscription create(@Valid Subscription subscription) {
-        return subscriptionService.create(subscription);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Subscription createSubscription(@RequestBody Subscription request) {
+        log.debug("Request Object: {}", request.toString());
+        try {
+            return subscriptionService.createSubscription(request);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @SneakyThrows
-    @Override
-    public ResourceList<Subscription> findAll(QuerySpec querySpec) {
-        return querySpec.apply(subscriptionService.findAll());
+    @GetMapping
+    public Iterable<Subscription> getSubscriptions() throws ExecutionException, InterruptedException {
+        return subscriptionService.getSubscriptions();
     }
 
-    @SneakyThrows
-    @Override
-    public Subscription findOne(@Valid UUID id, QuerySpec querySpec) {
-        return subscriptionService.findOne(id);
+    @GetMapping("/{subscriptionId}")
+    public Subscription getSubscription(@PathVariable final String subscriptionId) {
+        try {
+            return subscriptionService.getSubscription(subscriptionId);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @SneakyThrows
-    @Override
-    public Subscription save(@Valid Subscription subscription) {
-        return subscriptionService.update(subscription);
+    @PatchMapping("/{subscriptionId}")
+    public Subscription updateSubscription(@PathVariable("subscriptionId") String subscriptionId, @RequestBody Subscription request) {
+        log.debug("Subscription ID: {}", subscriptionId);
+        log.debug("Request Object: {}", request.toString());
+        try {
+            return subscriptionService.updateSubscription(subscriptionId, request);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @SneakyThrows
-    @Override
-    public void delete(@Valid UUID id) {
-        subscriptionService.delete(id);
+    @DeleteMapping("/{subscriptionId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSubscription(@PathVariable String subscriptionId) {
+        log.debug("Subscription ID: {}", subscriptionId);
+        subscriptionService.deleteSubscription(subscriptionId);
     }
+
 }
