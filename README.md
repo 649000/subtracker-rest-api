@@ -1,4 +1,4 @@
-# Subtracker - A subscription service tracker API
+# Subscription Tracker API Service
 
 ## Overview 
 As modern services shift towards subscription-based revenue models, managing diverse subscriptions becomes progressively intricate. Subtracker steps in to simplify this challenge, offering users a holistic view of their subscriptions. It provides comprehensive details such as costs, durations, and renewal dates in a streamlined manner.
