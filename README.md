@@ -29,11 +29,16 @@ To run the service, navigate to the root of the project and execute the command
 mvn spring-boot:run
 ```
 ## Endpoints
-|          | localhost                                   | Railway                                                     |
+|          | localhost                                   | Render                                                     |
 |----------|---------------------------------------------|-------------------------------------------------------------|
-| Open API | http://localhost:8080/swagger-ui/index.html | TBD |
-| Actuator | http://localhost:8080/actuator              | TBD              |
-| API      | http://localhost:8080/api                   | TBD              |
+| Open API | http://localhost:8080/swagger-ui/index.html | https://subtracker-api.onrender.com/swagger-ui/index.html |
+| Actuator | http://localhost:8080/actuator              | https://subtracker-api.onrender.com/actuator              |
+| API      | http://localhost:8080/api                   | https://subtracker-api.onrender.com/api              |
+
+Note that endpoints are secured by Spring Security and require a valid JWT access token to be called. Only the `/actuator` and `/swagger-ui/**` endpoints are not secured. 
+
+Service on Render may spin down due to inactivity, resulting in delays of 50 seconds or more for requests.
+
 ## Reflection
 
 The core objective behind this project was to immerse myself in the Spring Boot framework's functionalities and capabilities. To achieve this, I embarked on building a robust RESTful API service, leveraging the Spring Boot framework in conjunction with complementary Spring components like Spring Security and Spring OAuth2 Resource Server.
