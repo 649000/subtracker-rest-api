@@ -10,7 +10,7 @@
     <groupId>com.649000</groupId>
     <artifactId>subtracker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>subtracker</name>
+    <name>Subtracker</name>
     <description>Subscription Tracker</description>
 
     <properties>
