@@ -82,11 +82,11 @@
             <artifactId>spring-cloud-gcp-starter-data-firestore</artifactId>
             <version>6.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>spring-cloud-gcp-starter-security-firebase</artifactId>
-            <version>6.1.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.google.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-gcp-starter-security-firebase</artifactId>-->
+<!--            <version>6.1.1</version>-->
+<!--        </dependency>-->
 
 
         <dependency>
