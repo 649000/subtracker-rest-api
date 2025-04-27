@@ -78,6 +78,18 @@
             <version>${firebase.admin.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-data-firestore</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-security-firebase</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${spring.openapi.version}</version>
@@ -139,14 +151,14 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-crnk-project-maven</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/crnk-project/maven</url>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--            <id>bintray-crnk-project-maven</id>-->
+<!--            <name>bintray</name>-->
+<!--            <url>https://dl.bintray.com/crnk-project/maven</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 </project>
