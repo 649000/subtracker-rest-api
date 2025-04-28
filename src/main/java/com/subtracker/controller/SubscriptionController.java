@@ -23,54 +23,54 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Subscription createSubscription(@RequestBody Subscription request, @AuthenticationPrincipal Jwt jwt) {
-        log.debug("Request Object: {}", request.toString());
-        try {
-            request.setUserId(jwt.getSubject());
-            return subscriptionService.createSubscription(request);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @GetMapping
-    public Iterable<Subscription> getSubscriptions() throws ExecutionException, InterruptedException {
-        return subscriptionService.getSubscriptions();
-    }
-
-    @GetMapping("/{subscriptionId}")
-    public Subscription getSubscription(@PathVariable final String subscriptionId) {
-        try {
-            return subscriptionService.getSubscription(subscriptionId);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @PatchMapping("/{subscriptionId}")
-    public Subscription updateSubscription(@PathVariable("subscriptionId") String subscriptionId, @RequestBody Subscription request) {
-        log.debug("Subscription ID: {}", subscriptionId);
-        log.debug("Request Object: {}", request.toString());
-        try {
-            return subscriptionService.updateSubscription(subscriptionId, request);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @DeleteMapping("/{subscriptionId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSubscription(@PathVariable String subscriptionId) {
-        log.debug("Subscription ID: {}", subscriptionId);
-        subscriptionService.deleteSubscription(subscriptionId);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Subscription createSubscription(@RequestBody Subscription request, @AuthenticationPrincipal Jwt jwt) {
+//        log.debug("Request Object: {}", request.toString());
+//        try {
+//            request.setUserId(jwt.getSubject());
+//            return subscriptionService.createSubscription(request);
+//        } catch (ExecutionException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @GetMapping
+//    public Iterable<Subscription> getSubscriptions() throws ExecutionException, InterruptedException {
+//        return subscriptionService.getSubscriptions();
+//    }
+//
+//    @GetMapping("/{subscriptionId}")
+//    public Subscription getSubscription(@PathVariable final String subscriptionId) {
+//        try {
+//            return subscriptionService.getSubscription(subscriptionId);
+//        } catch (ExecutionException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @PatchMapping("/{subscriptionId}")
+//    public Subscription updateSubscription(@PathVariable("subscriptionId") String subscriptionId, @RequestBody Subscription request) {
+//        log.debug("Subscription ID: {}", subscriptionId);
+//        log.debug("Request Object: {}", request.toString());
+//        try {
+//            return subscriptionService.updateSubscription(subscriptionId, request);
+//        } catch (ExecutionException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @DeleteMapping("/{subscriptionId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteSubscription(@PathVariable String subscriptionId) {
+//        log.debug("Subscription ID: {}", subscriptionId);
+//        subscriptionService.deleteSubscription(subscriptionId);
+//    }
 
 }
