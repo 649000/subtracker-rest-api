@@ -57,4 +57,15 @@ public class SubscriptionRepository {
             throw e;
         }
     }
+
+    public List<Subscription> findAllById(List<String> ids) {
+        try {
+            return reactiveSubscriptionRepository.findAllById(ids)
+                    .collectList()
+                    .block(Duration.ofSeconds(5));
+        } catch (RuntimeException e) {
+            log.error("Failed to find all subscription", e);
+            throw e;
+        }
+    }
 }
