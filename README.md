@@ -1,4 +1,16 @@
 # Subscription Tracker API Service
+![Build](https://github.com/649000/subtracker-rest-api/actions/workflows/ci.yml/badge.svg)
+
+![CodeQL](https://github.com/649000/subtracker-rest-api/actions/workflows/codeql.yml/badge.svg)
+
+![Coverage](https://codecov.io/gh/649000/subtracker-rest-api/branch/develop/graph/badge.svg)
+
+![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=649000_subtracker-rest-api&metric=alert_status)
+
+![Checkstyle](https://img.shields.io/github/workflow/status/649000/subtracker-rest-api/Checkstyle?label=Checkstyle)
+
+![Dependabot](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
+
 
 ## Overview 
 As modern services shift towards subscription-based revenue models, managing diverse subscriptions becomes progressively intricate. Subtracker steps in to simplify this challenge, offering users a holistic view of their subscriptions. It provides comprehensive details such as costs, durations, and renewal dates in a streamlined manner.
