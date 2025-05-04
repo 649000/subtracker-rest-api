@@ -11,18 +11,18 @@ import java.util.List;
 
 @Document(collectionName = "user")
 @Data
-
+@NoArgsConstructor
 public class User {
 
     // Mandatory Annotation and only String type
     @DocumentId
-    private final String uid;
+    private String uid;
 
-    private final String email;
+    private String email;
 
-    private final String name;
+    private String name;
 
-    private final List<String> roles;
+    private List<String> roles;
 
     private String country;
 
@@ -33,11 +33,4 @@ public class User {
 
     @NotNull
     private Date modifiedDate;
-
-    public User(String uid, String email, String name, List<String> roles) {
-        this.uid = uid;
-        this.email = email;
-        this.name = name;
-        this.roles = roles;
-    }
 }
