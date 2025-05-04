@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/subscription")
+@RequestMapping(value = "/api/user")
 @Slf4j
 public class UserController {
 
