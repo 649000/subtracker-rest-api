@@ -1,32 +1,87 @@
-HELP.md
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# ====================================================
+# Operating System Files (macOS)
+# ====================================================
+.DS_Store
+.AppleDouble
+.LSOverride
 
-### STS ###
-.apt_generated
+# ====================================================
+# Java & Maven
+# ====================================================
+*.class
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Maven Wrapper
+mvnw
+mvnw.cmd
+.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# ====================================================
+# Spring Boot
+# ====================================================
+# Local configuration or secrets
+.env
+.env.*
+application-*.yml
+application-*.properties
+
+# Reports
+**/surefire-reports/
+**/jacoco.exec
+**/jacoco-report/
+
+# ====================================================
+# IDEs and Editors
+# ====================================================
+
+## IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+## Eclipse / Spring Tool Suite (STS)
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
+## NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+## Visual Studio Code
+.vscode/
+
+# ====================================================
+# Build Folders (exclude if inside src)
+# ====================================================
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-### VS Code ###
-.vscode/
+# ====================================================
+# Documentation
+# ====================================================
+HELP.md
