@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition(servers = {@Server(url = "/", description = "Default Server URL")})
 public class SubtrackerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SubtrackerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SubtrackerApplication.class, args);
+    }
 
 }
