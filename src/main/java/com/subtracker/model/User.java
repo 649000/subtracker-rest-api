@@ -2,33 +2,42 @@ package com.subtracker.model;
 
 import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.cloud.spring.data.firestore.Document;
+import com.google.firebase.database.annotations.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Document(collectionName = "usersCollection")
+import java.util.Date;
+import java.util.List;
+
+@Document(collectionName = "user")
+@Data
+
 public class User {
 
     // Mandatory Annotation and only String type
     @DocumentId
-    private String name;
+    private final String uid;
 
-    private Integer age;
+    private final String email;
 
-    public User() {
-    }
+    private final String name;
 
-    public String getName() {
-        return this.name;
-    }
+    private final List<String> roles;
 
-    public void setName(String name) {
+    private String country;
+
+    private List<String> subscriptionList;
+
+    @NotNull
+    private Date createdDate;
+
+    @NotNull
+    private Date modifiedDate;
+
+    public User(String uid, String email, String name, List<String> roles) {
+        this.uid = uid;
+        this.email = email;
         this.name = name;
+        this.roles = roles;
     }
-
-    public Integer getAge() {
-        return this.age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
 }
