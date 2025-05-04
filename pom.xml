@@ -98,14 +98,12 @@
             <artifactId>spring-cloud-gcp-starter-security-firebase</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${spring.openapi.version}</version>
         </dependency>
 
-        <!--        To Dos-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -115,19 +113,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.postgresql</groupId>-->
-        <!--            <artifactId>postgresql</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.crnk</groupId>-->
-        <!--            <artifactId>crnk-setup-spring-boot2</artifactId>-->
-        <!--            <version>3.3.20200920055408</version>-->
-        <!--        </dependency>-->
-
-
     </dependencies>
 
     <build>
@@ -157,15 +142,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <!--    <repositories>-->
-    <!--        <repository>-->
-    <!--            <snapshots>-->
-    <!--                <enabled>false</enabled>-->
-    <!--            </snapshots>-->
-    <!--            <id>bintray-crnk-project-maven</id>-->
-    <!--            <name>bintray</name>-->
-    <!--            <url>https://dl.bintray.com/crnk-project/maven</url>-->
-    <!--        </repository>-->
-    <!--    </repositories>-->
 </project>
