@@ -7,8 +7,6 @@
 
 ![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=649000_subtracker-rest-api&metric=alert_status)
 
-![Checkstyle](https://img.shields.io/github/workflow/status/649000/subtracker-rest-api/Checkstyle?label=Checkstyle)
-
 ![Dependabot](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
 
 
