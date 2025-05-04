@@ -4,7 +4,6 @@
 ![CodeQL](https://github.com/649000/subtracker-rest-api/actions/workflows/codeql.yml/badge.svg)
 
 ![Coverage](https://codecov.io/gh/649000/subtracker-rest-api/branch/develop/graph/badge.svg)
-[![codecov](https://codecov.io/gh/649000/subtracker-rest-api/graph/badge.svg?token=YI9PJ5ESYF)](https://codecov.io/gh/649000/subtracker-rest-api)
 
 ![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=649000_subtracker-rest-api&metric=alert_status)
 
