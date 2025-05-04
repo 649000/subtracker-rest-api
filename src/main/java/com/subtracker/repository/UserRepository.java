@@ -26,4 +26,13 @@ public class UserRepository {
             throw e;
         }
     }
+
+    public User save(User user) {
+        try {
+            return reactiveUserRepository.save(user).block(Duration.ofSeconds(5));
+        } catch (RuntimeException e) {
+            log.error("Failed to save user: {}", user, e);
+            throw e;
+        }
+    }
 }
