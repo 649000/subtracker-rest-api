@@ -69,16 +69,16 @@ This repository contains the backend service that powers the SubTracker applicat
    mvn spring-boot:run
    ```
 
-## Endpoints
-|          | localhost                                   | Render                                                     |
-|----------|---------------------------------------------|-------------------------------------------------------------|
-| Open API | http://localhost:8080/swagger-ui/index.html | https://subtracker-api.onrender.com/swagger-ui/index.html |
-| Actuator | http://localhost:8080/actuator              | https://subtracker-api.onrender.com/actuator              |
-| API      | http://localhost:8080/api                   | https://subtracker-api.onrender.com/api              |
+## API Endpoints
 
-Note that endpoints are secured by Spring Security and require a valid JWT access token to be called. Only the `/actuator` and `/swagger-ui/**` endpoints are not secured. 
+| Service   | Local                                     | Production                                               |
+|-----------|-------------------------------------------|---------------------------------------------------------|
+| API Base  | http://localhost:8080/api                 | https://subtracker-api.onrender.com/api                 |
+| OpenAPI   | http://localhost:8080/swagger-ui/index.html | https://subtracker-api.onrender.com/swagger-ui/index.html |
+| Actuator  | http://localhost:8080/actuator            | https://subtracker-api.onrender.com/actuator            |
 
-Service on Render may spin down due to inactivity, resulting in delays of 50 seconds or more for requests.
+**Note:** All API endpoints are secured and require a valid JWT access token from Firebase Auth. Only the `/actuator` and `/swagger-ui/**` endpoints are publicly accessible.
+
 
 ## Reflection
 
