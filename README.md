@@ -40,19 +40,35 @@ This repository contains the backend service that powers the SubTracker applicat
 - **GitHub Actions** - CI/CD pipeline for automated testing and deployment
 
 
-## Installation and Setup Instructions
-Firebase service account is required and must be set as an environment variable
+## Getting Started
 
-Example of setting environment variable on macOS:
-```
-export GOOGLE_APPLICATION_CREDENTIAL=<JSON file goes here>
-```
+### Prerequisites
+- JDK 21 or higher
+- Maven
+- Firebase Project with service account
 
-To run the service, navigate to the root of the project and execute the command
+### Setup
 
-```
-mvn spring-boot:run
-```
+1. Clone the repository:
+   ```
+   git clone https://github.com/649000/subtracker-rest-api.git
+   cd subtracker-rest-api
+   ```
+
+2. Set up Firebase service account:
+   ```bash
+   # macOS/Linux
+   export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+   
+   # Windows
+   set GOOGLE_APPLICATION_CREDENTIALS=C:\path\to\service-account.json
+   ```
+
+3. Run the application:
+   ```
+   mvn spring-boot:run
+   ```
+
 ## Endpoints
 |          | localhost                                   | Render                                                     |
 |----------|---------------------------------------------|-------------------------------------------------------------|
