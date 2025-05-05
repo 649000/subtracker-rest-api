@@ -33,8 +33,8 @@ mvnw.cmd
 # Local configuration or secrets
 .env
 .env.*
-application-*.yml
-application-*.properties
+application-local.yml
+application-local.properties
 
 # Reports
 **/surefire-reports/
