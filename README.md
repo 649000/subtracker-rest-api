@@ -11,18 +11,33 @@
 
 
 ## Overview 
-As modern services shift towards subscription-based revenue models, managing diverse subscriptions becomes progressively intricate. Subtracker steps in to simplify this challenge, offering users a holistic view of their subscriptions. It provides comprehensive details such as costs, durations, and renewal dates in a streamlined manner.
+SubTracker is a REST API service designed to help users manage their subscription-based services in one centralized location. With the growing number of subscription services in our daily lives, SubTracker enables users to track costs, durations, and renewal dates through a clean, secure API.
 
-This repository hosts the backend aspect, which comprises the REST API endpoints.
+This repository contains the backend service that powers the SubTracker application, built with modern Java technologies and security best practices.
+
+## Architecture
+
+```
+┌─────────────┐     ┌──────────────────┐     ┌─────────────┐
+│  Client App │────▶│  SubTracker API  │────▶│  Firestore  │
+└─────────────┘     │  Spring Boot     │     └─────────────┘
+        │           └──────────────────┘            ▲
+        │                    │                      │
+        └────────────────────▼──────────────────────┘
+                      Firebase Auth
+```
 
 
-## Technologies Utilized
-* Spring Boot: For robust and efficient API development.
-* Spring Security: Ensuring secure authentication and access control.
-* Spring Boot OAuth2 Resource Server: Enabling secure resource access via OAuth2.
-* Lombok: Streamlining Java code through annotations to reduce boilerplate code.
-* Maven: Facilitating project management and build automation.
-* Firebase Auth & Firestore: Authentication service and database for secure user authentication and data storage.
+## Tech Stack
+
+- **Spring Boot** - Framework for building production-ready applications
+- **Spring Security** - Authentication and authorization framework
+- **Spring OAuth2 Resource Server** - OAuth2 implementation for secure API access
+- **Firebase Auth** - User authentication and token validation
+- **Firestore** - NoSQL database for storing subscription data
+- **Lombok** - Annotation-based Java boilerplate code reducer
+- **Maven** - Dependency management and build automation
+- **GitHub Actions** - CI/CD pipeline for automated testing and deployment
 
 
 ## Installation and Setup Instructions
