@@ -58,10 +58,12 @@ This repository contains the backend service that powers the SubTracker applicat
 2. Set up Firebase service account:
    ```bash
    # macOS/Linux
-   export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+   export SUBTRACKER_FIREBASE_CREDENTIALS=/path/to/service-account.json
+   export SUBTRACKER_PROJECT_ID=<firebase_project_id>
    
    # Windows
-   set GOOGLE_APPLICATION_CREDENTIALS=C:\path\to\service-account.json
+   set SUBTRACKER_FIREBASE_CREDENTIALS=C:\path\to\service-account.json
+   set SUBTRACKER_PROJECT_ID=<firebase_project_id>
    ```
 
 3. Run the application:
