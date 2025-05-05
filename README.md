@@ -79,13 +79,27 @@ This repository contains the backend service that powers the SubTracker applicat
 
 **Note:** All API endpoints are secured and require a valid JWT access token from Firebase Auth. Only the `/actuator` and `/swagger-ui/**` endpoints are publicly accessible.
 
+## Security Implementation
+
+The API implements a token-based authentication system using Firebase Auth:
+
+1. Client applications authenticate users through Firebase Auth
+2. Firebase issues JWT tokens to authenticated users
+3. These tokens are validated by Spring Security's OAuth2 Resource Server
+4. Each API request must include a valid token in the Authorization header
 
 ## Reflection
 
-The core objective behind this project was to immerse myself in the Spring Boot framework's functionalities and capabilities. To achieve this, I embarked on building a robust RESTful API service, leveraging the Spring Boot framework in conjunction with complementary Spring components like Spring Security and Spring OAuth2 Resource Server.
+This project was built to deepen my understanding of Spring Boot and related technologies while solving a real-world problem. Instead of reinventing the wheel with custom authentication, I opted for Firebase Auth as an Identity-as-a-Service (IDaaS) solution to ensure robust security without compromising development time.
 
-Among the notable challenges encountered, one that stood out was the implementation of user authentication using Firebase Auth. Presented with the choice between crafting a custom authentication system or adopting an Identity as a Service (IDaaS) solution like AWS Cognito, Auth0, or Firebase Auth, I opted for the IDaaS approach. This decision stemmed from my belief that as developers, we should avoid redundant reinventions. Implementing a custom solution might inadvertently overlook critical security aspects, hence favoring a proven IDaaS solution felt more prudent.
+The project successfully demonstrates:
+- Building RESTful APIs with Spring Boot
+- Implementing industry-standard authentication with OAuth2
+- Integration with cloud services (Firebase)
+- Setting up proper CI/CD pipelines with test coverage
+- Code quality monitoring through SonarCloud
 
-In summary, this project not only deepened my familiarity with the Spring Boot framework but also underscored the significance of leveraging established identity management solutions to ensure robust security measures without compromising efficiency or reliability.
+## Performance Note
 
-With Spring Security, all endpoints barring `/actuator` and `/swagger-ui/**` are secured and require a valid token provided by Firebase.
+The hosted service on Render uses a free tier that spins down after periods of inactivity. Initial requests may experience a 50+ second delay while the service restarts.
+
