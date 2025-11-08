@@ -1,0 +1,17 @@
+ecr_repository_name = "your-ecr-repository-name"
+aws_region = "us-east-1"
+
+app_environment_variables = {
+  SPRING_PROFILES_ACTIVE = "prod"
+  SUBTRACKER_FIREBASE_CREDENTIALS = "/opt/aws/apprunner/secrets/firebase-credentials.json"
+  SUBTRACKER_PROJECT_ID          = "your-gcp-project-id"
+  LOGGING_LEVEL_COM_SUBTRACKER = "INFO"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE = "*"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS   = "always"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS = "always"
+  MANAGEMENT_INFO_GIT_MODE                  = "full"
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com"
+  SPRINGDOC_SHOW_ACTUATOR    = "true"
+  SPRINGDOC_API_DOCS_PATH    = "/api-docs"
+  SPRINGDOC_SWAGGER_UI_PATH  = "/swagger-ui.html"
+}
