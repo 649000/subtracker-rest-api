@@ -68,5 +68,5 @@ variable "instance_memory" {
 variable "aws_region" {
   description = "The AWS region to deploy resources"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-2"
 }

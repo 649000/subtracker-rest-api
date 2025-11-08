@@ -4,8 +4,8 @@
 # GHCR repository path
 ghcr_repository_url = "public.ecr.aws/github-owner/subtracker"
 
-# Target AWS region
-aws_region = "us-east-1"
+# Target AWS region (cheapest region with App Runner)
+aws_region = "us-west-2"
 
 # Runtime environment variables
 app_environment_variables = {
