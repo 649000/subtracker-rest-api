@@ -16,6 +16,7 @@ variable "environment" {
 variable "ghcr_repository_url" {
   description = "The full URL of the GHCR repository (e.g., public.ecr.aws/github-owner/repo-name)"
   type        = string
+  default     = "ghcr.io/649000/subtracker-rest-api"
 }
 
 # Container image tag
