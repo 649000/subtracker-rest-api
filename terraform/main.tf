@@ -9,6 +9,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+  
+  backend "s3" {
+    bucket         = "subtracker-terraform-state"
+    key            = "subtracker/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "subtracker-terraform-state-lock"
+    encrypt        = true
+  }
 }
 
 # AWS account information
