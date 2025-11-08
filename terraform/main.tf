@@ -1,3 +1,5 @@
+# AWS App Runner service configuration for containerized application deployment
+
 terraform {
   required_version = ">= 1.0"
 
@@ -9,51 +11,56 @@ terraform {
   }
 }
 
+# AWS account information
 data "aws_caller_identity" "current" {}
 
+# Current AWS region
 data "aws_region" "current" {}
 
-data "aws_ecr_repository" "app" {
-  name = var.ecr_repository_name
-}
-
-data "aws_ecr_image" "latest" {
-  repository_name = data.aws_ecr_repository.app.name
-  image_tag       = var.app_image_tag
-}
-
+# App Runner service definition
 resource "aws_apprunner_service" "subtracker" {
   service_name = var.app_name
 
+  # Container image source configuration
   source_configuration {
+    # Authentication for pulling images from GHCR
     authentication_configuration {
-      access_role_arn = aws_iam_role.apprunner_ecr_access.arn
+      access_role_arn = aws_iam_role.apprunner_ghcr_access.arn
     }
 
+    # Image repository settings
     image_repository {
-      image_identifier      = "${data.aws_ecr_repository.app.repository_url}@${data.aws_ecr_image.latest.image_digest}"
+      # Full image path with tag
+      image_identifier      = "${var.ghcr_repository_url}:${var.app_image_tag}"
       image_configuration {
+        # Runtime environment variables
         runtime_environment_variables = var.app_environment_variables
+        # Application port
         port = var.app_port
       }
-      image_repository_type = "ECR"
+      # Using ECR Public to access GHCR
+      image_repository_type = "ECR_PUBLIC"
     }
   }
 
+  # Compute resources for the service
   instance_configuration {
     cpu    = var.instance_cpu
     memory = var.instance_memory
   }
 
+  # Resource tagging
   tags = {
     Name        = var.app_name
     Environment = var.environment
   }
 }
 
-resource "aws_iam_role" "apprunner_ecr_access" {
-  name = "${var.app_name}-apprunner-ecr-access-role"
+# IAM role for App Runner to access container registry
+resource "aws_iam_role" "apprunner_ghcr_access" {
+  name = "${var.app_name}-apprunner-ghcr-access-role"
 
+  # Trust policy for App Runner service
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -68,14 +75,15 @@ resource "aws_iam_role" "apprunner_ecr_access" {
   })
 
   tags = {
-    Name        = "${var.app_name}-apprunner-ecr-access-role"
+    Name        = "${var.app_name}-apprunner-ghcr-access-role"
     Environment = var.environment
   }
 }
 
-resource "aws_iam_policy" "apprunner_ecr_access" {
-  name        = "${var.app_name}-apprunner-ecr-access-policy"
-  description = "Policy for App Runner to access ECR repository"
+# Permissions policy for accessing GHCR
+resource "aws_iam_policy" "apprunner_ghcr_access" {
+  name        = "${var.app_name}-apprunner-ghcr-access-policy"
+  description = "Policy for App Runner to access GHCR repository"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -83,10 +91,13 @@ resource "aws_iam_policy" "apprunner_ecr_access" {
       {
         Effect = "Allow"
         Action = [
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:DescribeImages",
-          "ecr:GetAuthorizationToken"
+          "ecr-public:GetAuthorizationToken",
+          "ecr-public:BatchCheckLayerAvailability",
+          "ecr-public:GetRepositoryPolicy",
+          "ecr-public:DescribeRepositories",
+          "ecr-public:DescribeImages",
+          "ecr-public:BatchGetImage",
+          "sts:GetServiceBearerToken"
         ]
         Resource = "*"
       }
@@ -94,7 +105,8 @@ resource "aws_iam_policy" "apprunner_ecr_access" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "apprunner_ecr_access" {
-  role       = aws_iam_role.apprunner_ecr_access.name
-  policy_arn = aws_iam_policy.apprunner_ecr_access.arn
+# Attach policy to App Runner role
+resource "aws_iam_role_policy_attachment" "apprunner_ghcr_access" {
+  role       = aws_iam_role.apprunner_ghcr_access.name
+  policy_arn = aws_iam_policy.apprunner_ghcr_access.arn
 }

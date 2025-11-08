@@ -1,10 +1,17 @@
-ecr_repository_name = "your-ecr-repository-name"
+# Deployment configuration variables
+# Copy this file to terraform.tfvars and customize for the environment
+
+# GHCR repository path
+ghcr_repository_url = "public.ecr.aws/github-owner/subtracker"
+
+# Target AWS region
 aws_region = "us-east-1"
 
+# Runtime environment variables
 app_environment_variables = {
   SPRING_PROFILES_ACTIVE = "prod"
   SUBTRACKER_FIREBASE_CREDENTIALS = "/opt/aws/apprunner/secrets/firebase-credentials.json"
-  SUBTRACKER_PROJECT_ID          = "your-gcp-project-id"
+  SUBTRACKER_PROJECT_ID          = "gcp-project-id"
   LOGGING_LEVEL_COM_SUBTRACKER = "INFO"
   MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE = "*"
   MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS   = "always"
