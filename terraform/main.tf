@@ -19,6 +19,11 @@ terraform {
   }
 }
 
+# Get current workspace
+locals {
+  environment = terraform.workspace == "default" ? var.environment : terraform.workspace
+}
+
 # AWS account information
 data "aws_caller_identity" "current" {}
 
@@ -27,7 +32,7 @@ data "aws_region" "current" {}
 
 # App Runner service definition
 resource "aws_apprunner_service" "subtracker" {
-  service_name = var.app_name
+  service_name = "${var.app_name}-${local.environment}"
 
   # Container image source configuration
   source_configuration {
@@ -42,7 +47,12 @@ resource "aws_apprunner_service" "subtracker" {
       image_identifier      = "${var.ghcr_repository_url}:${var.app_image_tag}"
       image_configuration {
         # Runtime environment variables
-        runtime_environment_variables = var.app_environment_variables
+        runtime_environment_variables = merge(
+          var.app_environment_variables,
+          {
+            SPRING_PROFILES_ACTIVE = local.environment
+          }
+        )
         # Application port
         port = var.app_port
       }
@@ -59,14 +69,14 @@ resource "aws_apprunner_service" "subtracker" {
 
   # Resource tagging
   tags = {
-    Name        = var.app_name
-    Environment = var.environment
+    Name        = "${var.app_name}-${local.environment}"
+    Environment = local.environment
   }
 }
 
 # IAM role for App Runner to access container registry
 resource "aws_iam_role" "apprunner_ghcr_access" {
-  name = "${var.app_name}-apprunner-ghcr-access-role"
+  name = "${var.app_name}-${local.environment}-apprunner-ghcr-access-role"
 
   # Trust policy for App Runner service
   assume_role_policy = jsonencode({
@@ -83,14 +93,14 @@ resource "aws_iam_role" "apprunner_ghcr_access" {
   })
 
   tags = {
-    Name        = "${var.app_name}-apprunner-ghcr-access-role"
-    Environment = var.environment
+    Name        = "${var.app_name}-${local.environment}-apprunner-ghcr-access-role"
+    Environment = local.environment
   }
 }
 
 # Permissions policy for accessing GHCR
 resource "aws_iam_policy" "apprunner_ghcr_access" {
-  name        = "${var.app_name}-apprunner-ghcr-access-policy"
+  name        = "${var.app_name}-${local.environment}-apprunner-ghcr-access-policy"
   description = "Policy for App Runner to access GHCR repository"
 
   policy = jsonencode({

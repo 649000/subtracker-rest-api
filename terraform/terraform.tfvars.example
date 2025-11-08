@@ -9,7 +9,6 @@ aws_region = "us-west-2"
 
 # Runtime environment variables
 app_environment_variables = {
-  SPRING_PROFILES_ACTIVE = "prod"
   SUBTRACKER_FIREBASE_CREDENTIALS = "/opt/aws/apprunner/secrets/firebase-credentials.json"
   SUBTRACKER_PROJECT_ID          = "gcp-project-id"
   LOGGING_LEVEL_COM_SUBTRACKER = "INFO"

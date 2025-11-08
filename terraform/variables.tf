@@ -9,7 +9,7 @@ variable "app_name" {
 variable "environment" {
   description = "The deployment environment (e.g., dev, staging, prod)"
   type        = string
-  default     = "prod"
+  default     = "dev"
 }
 
 # Full path to GHCR repository
@@ -37,7 +37,6 @@ variable "app_environment_variables" {
   description = "Environment variables to pass to the application container"
   type        = map(string)
   default = {
-    SPRING_PROFILES_ACTIVE = "prod"
     LOGGING_LEVEL_COM_SUBTRACKER = "DEBUG"
     MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE = "*"
     MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS   = "always"

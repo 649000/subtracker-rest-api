@@ -12,3 +12,8 @@ output "service_status" {
   description = "The status of the App Runner service"
   value       = aws_apprunner_service.subtracker.status
 }
+
+output "environment" {
+  description = "The deployed environment"
+  value       = local.environment
+}
