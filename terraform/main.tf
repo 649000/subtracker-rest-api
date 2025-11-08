@@ -13,7 +13,7 @@ terraform {
   backend "s3" {
     bucket         = "subtracker-terraform-state"
     key            = "subtracker/terraform.tfstate"
-    region         = "us-east-1"
+    region         = "ap-southeast-1"
     dynamodb_table = "subtracker-terraform-state-lock"
     encrypt        = true
   }
