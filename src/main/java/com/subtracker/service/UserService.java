@@ -2,6 +2,7 @@ package com.subtracker.service;
 
 import com.subtracker.model.User;
 import com.subtracker.repository.UserRepository;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -14,6 +15,7 @@ import java.util.Optional;
 /**
  * Service class for handling user-related operations such as user creation.
  */
+@Data
 @Service
 @Slf4j
 public class UserService {
