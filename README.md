@@ -1,19 +1,25 @@
 # Subscription Tracker API Service
+
 ![Build](https://github.com/649000/subtracker-rest-api/actions/workflows/ci.yml/badge.svg)
-
 ![CodeQL](https://github.com/649000/subtracker-rest-api/actions/workflows/codeql.yml/badge.svg)
-
 ![Coverage](https://codecov.io/gh/649000/subtracker-rest-api/branch/develop/graph/badge.svg)
-
 ![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=649000_subtracker-rest-api&metric=alert_status)
-
 ![Dependabot](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
 
+## Overview
 
-## Overview 
 SubTracker is a REST API service designed to help users manage their subscription-based services in one centralized location. With the growing number of subscription services in our daily lives, SubTracker enables users to track costs, durations, and renewal dates through a clean, secure API.
 
 This repository contains the backend service that powers the SubTracker application, built with modern Java technologies and security best practices.
+
+## Features
+
+- Centralized subscription management
+- Secure API access with Firebase authentication
+- Real-time data storage with Firestore
+- RESTful API design
+- Comprehensive API documentation with OpenAPI/Swagger
+- Health monitoring and metrics via Spring Boot Actuator
 
 ## Architecture
 
@@ -27,7 +33,6 @@ This repository contains the backend service that powers the SubTracker applicat
                       Firebase Auth
 ```
 
-
 ## Tech Stack
 
 - **Spring Boot** - Framework for building production-ready applications
@@ -39,10 +44,10 @@ This repository contains the backend service that powers the SubTracker applicat
 - **Maven** - Dependency management and build automation
 - **GitHub Actions** - CI/CD pipeline for automated testing and deployment
 
-
 ## Getting Started
 
 ### Prerequisites
+
 - JDK 21 or higher
 - Maven
 - Firebase Project with service account
@@ -50,7 +55,7 @@ This repository contains the backend service that powers the SubTracker applicat
 ### Setup
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/649000/subtracker-rest-api.git
    cd subtracker-rest-api
    ```
@@ -67,7 +72,7 @@ This repository contains the backend service that powers the SubTracker applicat
    ```
 
 3. Run the application:
-   ```
+   ```bash
    mvn spring-boot:run
    ```
 
