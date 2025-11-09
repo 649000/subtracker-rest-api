@@ -16,7 +16,6 @@ variable "environment" {
 variable "ecr_public_repository_url" {
   description = "The full URL of the ECR Public repository (e.g., public.ecr.aws/registry-alias/repo-name)"
   type        = string
-  default     = "public.ecr.aws/649000/subtracker-rest-api"
 }
 
 # Container image tag
