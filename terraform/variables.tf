@@ -33,6 +33,12 @@ variable "app_port" {
   default     = 8080
 }
 
+# GCP Project ID
+variable "gcp_project_id" {
+  description = "The GCP project ID"
+  type        = string
+}
+
 # Environment variables for application runtime
 variable "app_environment_variables" {
   description = "Environment variables to pass to the application container"
@@ -46,7 +52,6 @@ variable "app_environment_variables" {
     SPRINGDOC_SHOW_ACTUATOR    = "true"
     SPRINGDOC_API_DOCS_PATH    = "/api-docs"
     SPRINGDOC_SWAGGER_UI_PATH  = "/swagger-ui.html"
-    SUBTRACKER_PROJECT_ID      = "subtracker-66c2c"
   }
 }
 

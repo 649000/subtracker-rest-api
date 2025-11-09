@@ -63,6 +63,7 @@ resource "aws_apprunner_service" "subtracker" {
           {
             SPRING_PROFILES_ACTIVE           = local.environment
             GOOGLE_APPLICATION_CREDENTIALS_JSON = data.aws_ssm_parameter.firebase_credentials.value
+            SUBTRACKER_PROJECT_ID = var.gcp_project_id
           }
         )
         # Application port
