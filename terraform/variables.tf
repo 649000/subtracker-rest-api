@@ -2,7 +2,7 @@
 variable "app_name" {
   description = "The name of the application/service"
   type        = string
-  default     = "subtracker"
+  default     = "subtracker-rest-api"
 }
 
 # Deployment environment identifier
@@ -14,7 +14,7 @@ variable "environment" {
 
 # Full path to GHCR repository
 variable "ghcr_repository_url" {
-  description = "The full URL of the GHCR repository (e.g., public.ecr.aws/github-owner/repo-name)"
+  description = "The full URL of the GHCR repository (e.g.,ghcr.io/github-owner/repo-name)"
   type        = string
   default     = "ghcr.io/649000/subtracker-rest-api"
 }
