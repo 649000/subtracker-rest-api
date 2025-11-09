@@ -43,10 +43,10 @@ variable "app_environment_variables" {
     MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS   = "always"
     MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS = "always"
     MANAGEMENT_INFO_GIT_MODE                  = "full"
-    SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com"
     SPRINGDOC_SHOW_ACTUATOR    = "true"
     SPRINGDOC_API_DOCS_PATH    = "/api-docs"
     SPRINGDOC_SWAGGER_UI_PATH  = "/swagger-ui.html"
+    SUBTRACKER_FIREBASE_CREDENTIALS = "/app/secrets/firebase-credentials.json"
   }
 }
 
