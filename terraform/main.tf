@@ -22,6 +22,8 @@ terraform {
 # Get current workspace
 locals {
   environment = terraform.workspace == "default" ? var.environment : terraform.workspace
+  # SSM parameter name for Firebase credentials
+  firebase_creds_ssm_name = "/subtracker/${local.environment}/firebase-credentials"
 }
 
 # AWS account information
@@ -29,6 +31,13 @@ data "aws_caller_identity" "current" {}
 
 # Current AWS region
 data "aws_region" "current" {}
+
+# Data source to fetch the Firebase credentials from SSM Parameter Store
+# The value will be the base64-encoded JSON string
+data "aws_ssm_parameter" "firebase_credentials" {
+  name            = local.firebase_creds_ssm_name
+  with_decryption = true
+}
 
 # App Runner service definition
 resource "aws_apprunner_service" "subtracker" {
@@ -47,10 +56,13 @@ resource "aws_apprunner_service" "subtracker" {
       image_identifier      = "${var.ghcr_repository_url}:${var.app_image_tag}"
       image_configuration {
         # Runtime environment variables
+        # Pass the *value* of the SSM parameter (the base64 encoded JSON) as an environment variable
+        # Using GOOGLE_APPLICATION_CREDENTIALS_JSON is the standard way for Google libraries
         runtime_environment_variables = merge(
           var.app_environment_variables,
           {
-            SPRING_PROFILES_ACTIVE = local.environment
+            SPRING_PROFILES_ACTIVE           = local.environment
+            GOOGLE_APPLICATION_CREDENTIALS_JSON = data.aws_ssm_parameter.firebase_credentials.value
           }
         )
         # Application port
@@ -74,7 +86,7 @@ resource "aws_apprunner_service" "subtracker" {
   }
 }
 
-# IAM role for App Runner to access container registry
+# IAM role for App Runner to access container registry AND SSM
 resource "aws_iam_role" "apprunner_ghcr_access" {
   name = "${var.app_name}-${local.environment}-apprunner-ghcr-access-role"
 
@@ -98,15 +110,16 @@ resource "aws_iam_role" "apprunner_ghcr_access" {
   }
 }
 
-# Permissions policy for accessing GHCR
+# Permissions policy for accessing GHCR AND SSM Parameter Store
 resource "aws_iam_policy" "apprunner_ghcr_access" {
   name        = "${var.app_name}-${local.environment}-apprunner-ghcr-access-policy"
-  description = "Policy for App Runner to access GHCR repository"
+  description = "Policy for App Runner to access GHCR repository and SSM Parameter Store"
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
+        # Permissions for accessing GHCR via ECR Public
         Effect = "Allow"
         Action = [
           "ecr-public:GetAuthorizationToken",
@@ -118,6 +131,14 @@ resource "aws_iam_policy" "apprunner_ghcr_access" {
           "sts:GetServiceBearerToken"
         ]
         Resource = "*"
+      },
+      {
+        # Permission to get the specific SSM parameter
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameter"
+        ]
+        Resource = "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter${local.firebase_creds_ssm_name}"
       }
     ]
   })

@@ -46,7 +46,6 @@ variable "app_environment_variables" {
     SPRINGDOC_SHOW_ACTUATOR    = "true"
     SPRINGDOC_API_DOCS_PATH    = "/api-docs"
     SPRINGDOC_SWAGGER_UI_PATH  = "/swagger-ui.html"
-    SUBTRACKER_FIREBASE_CREDENTIALS = "/app/secrets/firebase-credentials.json"
   }
 }
 
