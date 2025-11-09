@@ -12,11 +12,11 @@ variable "environment" {
   default     = "dev"
 }
 
-# Full path to GHCR repository
-variable "ghcr_repository_url" {
-  description = "The full URL of the GHCR repository (e.g.,ghcr.io/github-owner/repo-name)"
+# Full path to ECR Public repository
+variable "ecr_public_repository_url" {
+  description = "The full URL of the ECR Public repository (e.g., public.ecr.aws/registry-alias/repo-name)"
   type        = string
-  default     = "ghcr.io/649000/subtracker-rest-api"
+  default     = "public.ecr.aws/649000/subtracker-rest-api"
 }
 
 # Container image tag
