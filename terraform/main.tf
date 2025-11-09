@@ -53,7 +53,7 @@ resource "aws_apprunner_service" "subtracker" {
     # Image repository settings
     image_repository {
       # Full image path with tag
-      image_identifier      = "${var.ghcr_repository_url}:${var.app_image_tag}"
+      image_identifier      = "${var.ecr_public_repository_url}:${var.app_image_tag}"
       image_configuration {
         # Runtime environment variables
         # Pass the *value* of the SSM parameter (the base64 encoded JSON) as an environment variable
