@@ -75,9 +75,9 @@ This repository contains the backend service that powers the SubTracker applicat
 
 | Service   | Local                                     | Production                                               |
 |-----------|-------------------------------------------|---------------------------------------------------------|
-| API Base  | http://localhost:8080/api                 | https://subtracker-api.onrender.com/api                 |
-| OpenAPI   | http://localhost:8080/swagger-ui/index.html | https://subtracker-api.onrender.com/swagger-ui/index.html |
-| Actuator  | http://localhost:8080/actuator            | https://subtracker-api.onrender.com/actuator            |
+| API Base  | http://localhost:8080/api                 | https://<service-url-from-terraform>/api                 |
+| OpenAPI   | http://localhost:8080/swagger-ui/index.html | https://<service-url-from-terraform>/swagger-ui/index.html |
+| Actuator  | http://localhost:8080/actuator            | https://<service-url-from-terraform>/actuator            |
 
 **Note:** All API endpoints are secured and require a valid JWT access token from Firebase Auth. Only the `/actuator` and `/swagger-ui/**` endpoints are publicly accessible.
 
@@ -90,6 +90,10 @@ The API implements a token-based authentication system using Firebase Auth:
 3. These tokens are validated by Spring Security's OAuth2 Resource Server
 4. Each API request must include a valid token in the Authorization header
 
+## Deployment
+
+This application is deployed using Terraform to AWS App Runner. The infrastructure configuration can be found in the `terraform/` directory.
+
 ## Reflection
 
 This project was built to deepen my understanding of Spring Boot and related technologies while solving a real-world problem. Instead of reinventing the wheel with custom authentication, I opted for Firebase Auth as an Identity-as-a-Service (IDaaS) solution to ensure robust security without compromising development time.
@@ -100,8 +104,8 @@ The project successfully demonstrates:
 - Integration with cloud services (Firebase)
 - Setting up proper CI/CD pipelines with test coverage
 - Code quality monitoring through SonarCloud
+- Infrastructure as Code with Terraform
 
 ## Performance Note
 
-The hosted service on Render uses a free tier that spins down after periods of inactivity. Initial requests may experience a 50+ second delay while the service restarts.
-
+The hosted service uses AWS App Runner which may have different performance characteristics compared to the previous hosting platform. Initial requests may experience delays while the service initializes.
