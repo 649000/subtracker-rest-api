@@ -18,8 +18,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SubscriptionControllerTest {
@@ -42,7 +42,7 @@ class SubscriptionControllerTest {
         sampleSubscription = new Subscription();
         sampleSubscription.setSubscriptionId(subscriptionId);
         sampleSubscription.setUserId(userId);
-        sampleSubscription.setName("Test Subscription");
+        sampleSubscription.setServiceName("Test Subscription");
         
         when(jwt.getSubject()).thenReturn(userId);
     }
@@ -50,7 +50,7 @@ class SubscriptionControllerTest {
     @Test
     void createSubscription_shouldReturnCreatedSubscription() {
         Subscription request = new Subscription();
-        request.setName("New Subscription");
+        request.setServiceName("New Subscription");
         
         when(subscriptionService.createSubscription(any(Subscription.class))).thenReturn(sampleSubscription);
 
