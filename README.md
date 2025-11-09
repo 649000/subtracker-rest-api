@@ -73,11 +73,11 @@ This repository contains the backend service that powers the SubTracker applicat
 
 ## API Endpoints
 
-| Service   | Local                                     | Production                                               |
-|-----------|-------------------------------------------|---------------------------------------------------------|
-| API Base  | http://localhost:8080/api                 | https://<service-url-from-terraform>/api                 |
-| OpenAPI   | http://localhost:8080/swagger-ui/index.html | https://<service-url-from-terraform>/swagger-ui/index.html |
-| Actuator  | http://localhost:8080/actuator            | https://<service-url-from-terraform>/actuator            |
+| Service   | Local                                     | Production  |
+|-----------|-------------------------------------------|-------------|
+| API Base  | http://localhost:8080/api                 | Not deployed |
+| OpenAPI   | http://localhost:8080/swagger-ui/index.html | Not deployed |
+| Actuator  | http://localhost:8080/actuator            | Not deployed |
 
 **Note:** All API endpoints are secured and require a valid JWT access token from Firebase Auth. Only the `/actuator` and `/swagger-ui/**` endpoints are publicly accessible.
 
@@ -92,7 +92,9 @@ The API implements a token-based authentication system using Firebase Auth:
 
 ## Deployment
 
-This application is deployed using Terraform to AWS App Runner. The infrastructure configuration can be found in the `terraform/` directory.
+This application includes Terraform configuration for deployment to AWS App Runner, but is not currently deployed to save on hosting costs. This is a personal project and does not require a production environment.
+
+The infrastructure configuration can be found in the `terraform/` directory.
 
 ## Reflection
 
@@ -108,4 +110,4 @@ The project successfully demonstrates:
 
 ## Performance Note
 
-The hosted service uses AWS App Runner which may have different performance characteristics compared to the previous hosting platform. Initial requests may experience delays while the service initializes.
+When deployed, the service would use AWS App Runner which may have different performance characteristics compared to local development environments. Initial requests may experience delays while the service initializes.
