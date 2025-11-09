@@ -92,7 +92,7 @@ The API implements a token-based authentication system using Firebase Auth:
 
 ## Deployment
 
-This application includes Terraform configuration for deployment to AWS App Runner, but is not currently deployed to save on hosting costs. This is a personal project and does not require a production environment.
+This application includes Terraform configuration for deployment to AWS App Runner, but is not currently deployed to save on hosting costs. This is a personal/pet project and the service is not hosted to avoid unnecessary expenses.
 
 The infrastructure configuration can be found in the `terraform/` directory.
 
