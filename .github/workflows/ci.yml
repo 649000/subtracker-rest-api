@@ -4,8 +4,6 @@ name: Build, Test, and Push Image
 on:
   push:
     branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
 
 jobs:
   build:
@@ -40,7 +38,6 @@ jobs:
   push-image:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     
     steps:
       - name: Checkout code
