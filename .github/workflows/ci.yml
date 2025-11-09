@@ -92,9 +92,11 @@ jobs:
       - name: Terraform Plan
         run: |
           cd terraform
+          terraform workspace new dev || terraform workspace select dev
           terraform plan -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
 
       - name: Terraform Apply
         run: |
           cd terraform
+          terraform workspace new dev || terraform workspace select dev
           terraform apply -auto-approve -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
