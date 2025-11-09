@@ -46,4 +46,3 @@ To destroy the resources created by this configuration:
 ```
 terraform destroy
 ```
-```
