@@ -73,8 +73,8 @@ This repository contains the backend service that powers the SubTracker applicat
 
 ## API Endpoints
 
-| Service   | Local                                     | Production  |
-|-----------|-------------------------------------------|-------------|
+| Service   | Local                                     | AWS    |
+|-----------|-------------------------------------------|--------|
 | API Base  | http://localhost:8080/api                 | Not deployed |
 | OpenAPI   | http://localhost:8080/swagger-ui/index.html | Not deployed |
 | Actuator  | http://localhost:8080/actuator            | Not deployed |
