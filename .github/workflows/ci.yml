@@ -53,17 +53,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
 
-      - name: Login to Amazon ECR
+      - name: Login to Amazon ECR Public
         uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build, tag, and push image to Amazon ECR Public
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REGISTRY: public.ecr.aws
+          ECR_REGISTRY_ALIAS: ${{ secrets.ECR_REGISTRY_ALIAS }}
+          ECR_REPOSITORY: subtracker-rest-api
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
 
   deploy:
     needs: build-and-push-image
@@ -93,10 +96,10 @@ jobs:
         run: |
           cd terraform
           terraform workspace new dev || terraform workspace select dev
-          terraform plan -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
+          terraform plan -var="app_image_tag=${{ github.sha }}" -var="gcp_project_id=${{ secrets.GCP_PROJECT_ID }}"
 
       - name: Terraform Apply
         run: |
           cd terraform
           terraform workspace new dev || terraform workspace select dev
-          terraform apply -auto-approve -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
+          terraform apply -auto-approve -var="app_image_tag=${{ github.sha }}" -var="gcp_project_id=${{ secrets.GCP_PROJECT_ID }}"
