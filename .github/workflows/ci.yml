@@ -1,5 +1,5 @@
 # .github/workflows/ci.yml
-name: Build, Test, and Upload Coverage
+name: Build, Test, Upload Coverage, and Deploy
 
 on:
   push:
@@ -64,3 +64,37 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  deploy:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Terraform Init
+        run: |
+          cd terraform
+          terraform init
+
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
+
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform apply -auto-approve -var="app_image_tag=${{ github.sha }}" -var="ecr_public_repository_url=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}"
