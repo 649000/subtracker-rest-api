@@ -1,0 +1,134 @@
+###############################################################################
+# Terraform CI
+#
+# Runs on every push and pull request that touches the `terraform/` directory.
+# Jobs:
+#   1. fmt     - `terraform fmt -check -recursive`. Fails if the code is not
+#                canonically formatted.
+#   2. validate - `terraform init -backend=false` (no AWS creds needed) and
+#                `terraform validate`. Confirms the configuration is well-formed.
+#   3. lint    - TFLint with the AWS plugin. Catches provider-schema issues.
+#   4. security - Checkov static analysis. Fails on HIGH/CRITICAL findings.
+#
+# The pipeline is intentionally read-only: no `terraform plan` against real
+# AWS, no `terraform apply`. Plan-and-apply on PRs would require an
+# OIDC-federated role; that's documented in `terraform/README.md` under
+# "Out of scope".
+###############################################################################
+
+name: Terraform
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yml"
+  pull_request:
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yml"
+
+# Cancel an in-flight run for the same ref when a new commit lands.
+concurrency:
+  group: terraform-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  fmt:
+    name: terraform fmt
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.x
+
+      - name: terraform fmt -check
+        run: terraform fmt -check -recursive -diff
+        # Non-zero exit if anything would be reformatted, which is what we want.
+
+  validate:
+    name: terraform validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.x
+
+      # `-backend=false` skips the S3 backend init, so we don't need AWS
+      # credentials in CI just to validate the configuration.
+      - name: terraform init
+        run: terraform init -backend=false -input=false
+
+      - name: terraform validate
+        run: terraform validate -no-color
+
+  lint:
+    name: tflint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.x
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
+
+      # Downloads the plugins declared in `.tflint.hcl` (terraform + aws).
+      - name: tflint init
+        run: tflint --init
+
+      - name: tflint
+        run: tflint --recursive --minimum-failure-severity=warning
+
+  security:
+    name: checkov
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Checkov
+        run: pip install --upgrade checkov
+
+      # Checkov ships with a large rule set; `--soft-fail` would mask findings
+      # so we let it fail the job on HIGH/CRITICAL. The `--framework terraform`
+      # flag prevents it from scanning the Java/Maven project as well.
+      - name: Run Checkov
+        run: checkov -d . --framework terraform --compact --quiet
+        # Override the directory above: the `defaults.run.working-directory`
+        # already puts us in `terraform/`, so `-d .` is the right path.
