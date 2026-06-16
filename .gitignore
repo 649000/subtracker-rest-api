@@ -53,6 +53,39 @@ application-local.properties
 out/
 .idea_modules/
 
+# ====================================================
+# Terraform
+# ====================================================
+# Local Terraform working files
+.terraform/
+.terraform.tfstate.lock.info
+
+# State files (we use a remote backend, but keep the rule for safety).
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Variable files containing sensitive values.
+# - `terraform.tfvars` (un-prefixed) may contain real secrets, e.g. when
+#   someone runs `cp terraform.tfvars.example terraform.tfvars` locally.
+#   We do NOT commit it.
+# - `*.auto.tfvars` files (dev/sit/prod) are intentionally committed: they
+#   contain non-sensitive per-environment overrides (env name, image tag,
+#   GCP project ID, log level). They are the showcase.
+terraform.tfvars
+!terraform/**/.tflint.hcl
+
+# Saved plans (may contain secrets in the planned resource diffs).
+*.tfplan
+*.tfplan.json
+
+# Override files for backend / provider config.
+*.tfbackend
+*.tfbackend.json
+*_override.tf
+*_override.tf.json
+
 ## Eclipse / Spring Tool Suite (STS)
 .apt_generated/
 .classpath
