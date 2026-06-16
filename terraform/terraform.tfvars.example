@@ -1,23 +1,93 @@
-# Deployment configuration variables
-# Copy this file to terraform.tfvars and customize for the environment
+###############################################################################
+# Example variable values for the Terraform configuration.
+#
+# Usage:
+#   1. Copy this file:  cp terraform.tfvars.example terraform.tfvars
+#   2. Edit terraform.tfvars with values that match your AWS account,
+#      ECR Public repository, and GCP project.
+#
+# Why does this file exist?
+#   Every value here is intentionally also expressed in `variables.tf` with
+#   a sensible default. This file is the *single, discoverable* place to see
+#   what you might want to override without reading the whole variable file.
+#
+# Important:
+#   - `terraform.tfvars` is git-ignored because it may contain personal
+#     namespacing (e.g. your ECR Public alias).
+#   - Per-environment overrides belong in `dev.auto.tfvars`, `sit.auto.tfvars`,
+#     and `prod.auto.tfvars`, NOT in `terraform.tfvars`.
+###############################################################################
 
-# GHCR repository path
-ghcr_repository_url = "public.ecr.aws/github-owner/subtracker"
+# ---------------------------------------------------------------------------
+# Container image
+# ---------------------------------------------------------------------------
 
-# Target AWS region (cheapest region with App Runner)
+# Full URL of the ECR Public repository that holds the container image.
+# Example format:  public.ecr.aws/<your-alias>/<your-repository>
+# Find your alias at https://gallery.ecr.aws/ after creating a public repo.
+ecr_public_repository_url = "public.ecr.aws/your-alias/subtracker-rest-api"
+
+# Image tag to deploy. `latest` is fine for dev, but you should pin an
+# immutable tag (git SHA or semver) for sit and prod.
+app_image_tag = "latest"
+
+# Application port (must match the Dockerfile EXPOSE).
+app_port = 8080
+
+# ---------------------------------------------------------------------------
+# Deployment
+# ---------------------------------------------------------------------------
+
+# AWS region to deploy the App Runner service to.
+# Must support App Runner - see the validation in variables.tf for the list.
 aws_region = "us-west-2"
 
-# Runtime environment variables
-app_environment_variables = {
-  SUBTRACKER_FIREBASE_CREDENTIALS = "/opt/aws/apprunner/secrets/firebase-credentials.json"
-  SUBTRACKER_PROJECT_ID          = "gcp-project-id"
-  LOGGING_LEVEL_COM_SUBTRACKER = "INFO"
-  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE = "*"
-  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS   = "always"
-  MANAGEMENT_ENDPOINT_HEALTH_SHOW_COMPONENTS = "always"
-  MANAGEMENT_INFO_GIT_MODE                  = "full"
-  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com"
-  SPRINGDOC_SHOW_ACTUATOR    = "true"
-  SPRINGDOC_API_DOCS_PATH    = "/api-docs"
-  SPRINGDOC_SWAGGER_UI_PATH  = "/swagger-ui.html"
-}
+# ---------------------------------------------------------------------------
+# GCP / Firebase
+# ---------------------------------------------------------------------------
+
+# GCP project ID that the Spring Boot application talks to.
+gcp_project_id = "your-gcp-project-id"
+
+# Name (path) of the SSM Parameter Store SecureString holding the Firebase
+# service-account JSON. Defaults to "/subtracker/firebase-credentials".
+# firebase_credentials_ssm_parameter_name = "/subtracker/firebase-credentials"
+
+# ---------------------------------------------------------------------------
+# Compute sizing
+# ---------------------------------------------------------------------------
+
+# CPU / memory for the App Runner instance. See the App Runner pricing page
+# for the per-second billing model.
+# instance_cpu    = "1 vCPU"
+# instance_memory = "2 GB"
+
+# ---------------------------------------------------------------------------
+# Auto-scaling
+# ---------------------------------------------------------------------------
+
+# Minimum and maximum number of instances App Runner will keep / scale to.
+# min_size        = 1
+# max_size        = 4
+# max_concurrency = 100
+
+# ---------------------------------------------------------------------------
+# Health check
+# ---------------------------------------------------------------------------
+
+# HTTP path App Runner hits for health checks. Should return 2xx/3xx when
+# the service is healthy. Defaults to Spring Boot Actuator's health endpoint.
+# health_check_path = "/actuator/health"
+
+# ---------------------------------------------------------------------------
+# Extra runtime environment variables
+# ---------------------------------------------------------------------------
+
+# These are merged with the framework-managed variables (SPRING_PROFILES_ACTIVE,
+# GOOGLE_APPLICATION_CREDENTIALS_JSON, SUBTRACKER_PROJECT_ID). Anything you set
+# here is overridden by the framework vars - that's intentional, see main.tf.
+#
+# Example: per-env logging level.
+# app_environment_variables = {
+#   LOGGING_LEVEL_COM_SUBTRACKER = "DEBUG"  # use INFO or WARN in prod
+# }
