@@ -1,7 +1,7 @@
 # Subscription Tracker API Service
 
-![Build](https://github.com/649000/subtracker-rest-api/actions/workflows/ci.yml/badge.svg)
-![CodeQL](https://github.com/649000/subtracker-rest-api/actions/workflows/codeql.yml/badge.svg)
+![Build](https://github.com/649000/subtracker-rest-api/actions/workflows/ci.yml/badge.svg?branch=develop)
+![CodeQL](https://github.com/649000/subtracker-rest-api/actions/workflows/codeql.yml/badge.svg?branch=develop)
 ![Coverage](https://codecov.io/gh/649000/subtracker-rest-api/branch/develop/graph/badge.svg)
 ![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=649000_subtracker-rest-api&metric=alert_status)
 ![Dependabot](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)
