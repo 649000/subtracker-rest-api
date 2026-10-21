@@ -2,13 +2,14 @@ package com.subtracker;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SubtrackerApplicationTests {
 
     @Test
-    public void test() {
-        assertTrue(true);
+    void testApplicationInitialization() {
+        SubtrackerApplication application = new SubtrackerApplication();
+        assertNotNull(application);
     }
 
 }

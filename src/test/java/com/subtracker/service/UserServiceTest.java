@@ -90,6 +90,34 @@ class UserServiceTest {
     }
 
     @Test
+    void testCreateUser_MissingUidOnly_ShouldThrowException() {
+        User request = new User();
+        when(jwt.getSubject()).thenReturn(null);
+        when(jwt.getClaimAsString("email")).thenReturn("test@subtracker.com");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.createUser(jwt, request);
+        });
+
+        assertEquals("Missing required JWT claims: subject or email", exception.getMessage());
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void testCreateUser_MissingEmailOnly_ShouldThrowException() {
+        User request = new User();
+        when(jwt.getSubject()).thenReturn("12345");
+        when(jwt.getClaimAsString("email")).thenReturn(null);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.createUser(jwt, request);
+        });
+
+        assertEquals("Missing required JWT claims: subject or email", exception.getMessage());
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
     void testGetUserByUid_Success() {
         // Arrange
         String uid = "12345";

@@ -111,4 +111,55 @@ class SubscriptionRepositoryTest {
 
         assertThrows(RuntimeException.class, () -> subscriptionRepository.findById(subscriptionId));
     }
+
+    @Test
+    void save_shouldThrowNullPointerExceptionWhenSubscriptionIsNull() {
+        assertThrows(NullPointerException.class, () -> subscriptionRepository.save(null));
+    }
+
+    @Test
+    void findById_shouldThrowNullPointerExceptionWhenIdIsNull() {
+        assertThrows(NullPointerException.class, () -> subscriptionRepository.findById(null));
+    }
+
+    @Test
+    void deleteById_shouldThrowNullPointerExceptionWhenIdIsNull() {
+        assertThrows(NullPointerException.class, () -> subscriptionRepository.deleteById(null));
+    }
+
+    @Test
+    void deleteById_shouldThrowIfReactiveThrows() {
+        when(reactiveSubscriptionRepository.deleteById(subscriptionId))
+                .thenReturn(Mono.error(new RuntimeException("Delete error")));
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> subscriptionRepository.deleteById(subscriptionId));
+        assertEquals("Delete error", ex.getMessage());
+    }
+
+    @Test
+    void findAll_shouldThrowIfReactiveThrows() {
+        when(reactiveSubscriptionRepository.findAll())
+                .thenReturn(Flux.error(new RuntimeException("FindAll error")));
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> subscriptionRepository.findAll());
+        assertEquals("FindAll error", ex.getMessage());
+    }
+
+    @Test
+    void findAllById_shouldThrowNullPointerExceptionWhenIdsIsNull() {
+        assertThrows(NullPointerException.class, () -> subscriptionRepository.findAllById(null));
+    }
+
+    @Test
+    void findAllById_shouldThrowIfReactiveThrows() {
+        List<String> ids = Arrays.asList("id1", "id2");
+        when(reactiveSubscriptionRepository.findAllById(ids))
+                .thenReturn(Flux.error(new RuntimeException("FindAllById error")));
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> subscriptionRepository.findAllById(ids));
+        assertEquals("FindAllById error", ex.getMessage());
+    }
 }

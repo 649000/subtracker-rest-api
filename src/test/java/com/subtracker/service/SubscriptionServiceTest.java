@@ -120,4 +120,116 @@ class SubscriptionServiceTest {
         verify(subscriptionRepository).deleteById(subId);
         verify(userRepository).save(user);
     }
+
+    @Test
+    void createSubscription_shouldThrowException_whenUserNotFound() {
+        String userId = "nonexistent";
+        Subscription subscription = new Subscription();
+        subscription.setUserId(userId);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () ->
+                subscriptionService.createSubscription(subscription));
+        assertTrue(ex.getMessage().contains("User not found"));
+    }
+
+    @Test
+    void createSubscription_shouldThrowException_whenSubscriptionIsNull() {
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.createSubscription(null));
+    }
+
+    @Test
+    void getSubscriptions_shouldReturnEmptyList_whenUserNotFound() {
+        String userId = "nonexistent";
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        Iterable<Subscription> result = subscriptionService.getSubscriptions(userId);
+        assertNotNull(result);
+        assertFalse(result.iterator().hasNext());
+    }
+
+    @Test
+    void getSubscriptions_shouldThrowException_whenUserIdIsNull() {
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.getSubscriptions(null));
+    }
+
+    @Test
+    void getSubscription_shouldThrowException_whenSubscriptionNotFound() {
+        String subId = "sub1";
+        String userId = "user123";
+        when(subscriptionRepository.findById(subId)).thenReturn(Optional.empty());
+
+        assertThrows(SubscriptionException.class, () ->
+                subscriptionService.getSubscription(subId, userId));
+    }
+
+    @Test
+    void getSubscription_shouldThrowException_whenSubscriptionNotOwnedByUser() {
+        String subId = "sub1";
+        String userId = "user123";
+        Subscription subscription = new Subscription();
+        subscription.setSubscriptionId(subId);
+        subscription.setUserId("anotherUser");
+        when(subscriptionRepository.findById(subId)).thenReturn(Optional.of(subscription));
+
+        assertThrows(SubscriptionException.class, () ->
+                subscriptionService.getSubscription(subId, userId));
+    }
+
+    @Test
+    void getSubscription_shouldThrowException_whenParametersAreNull() {
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.getSubscription(null, "user123"));
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.getSubscription("sub1", null));
+    }
+
+    @Test
+    void deleteSubscription_shouldThrowException_whenSubscriptionNotFound() {
+        String subId = "sub1";
+        String userId = "user123";
+        when(subscriptionRepository.findById(subId)).thenReturn(Optional.empty());
+
+        assertThrows(SecurityException.class, () ->
+                subscriptionService.deleteSubscription(subId, userId));
+    }
+
+    @Test
+    void deleteSubscription_shouldThrowException_whenSubscriptionNotOwnedByUser() {
+        String subId = "sub1";
+        String userId = "user123";
+        Subscription subscription = new Subscription();
+        subscription.setSubscriptionId(subId);
+        subscription.setUserId("anotherUser");
+        when(subscriptionRepository.findById(subId)).thenReturn(Optional.of(subscription));
+
+        assertThrows(SecurityException.class, () ->
+                subscriptionService.deleteSubscription(subId, userId));
+    }
+
+    @Test
+    void deleteSubscription_shouldHandleCaseWhenUserNotFoundDuringCleanup() {
+        String subId = "sub1";
+        String userId = "user123";
+        Subscription subscription = new Subscription();
+        subscription.setSubscriptionId(subId);
+        subscription.setUserId(userId);
+
+        when(subscriptionRepository.findById(subId)).thenReturn(Optional.of(subscription));
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        assertDoesNotThrow(() -> subscriptionService.deleteSubscription(subId, userId));
+        verify(subscriptionRepository).deleteById(subId);
+    }
+
+    @Test
+    void deleteSubscription_shouldThrowException_whenParametersAreNull() {
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.deleteSubscription(null, "user123"));
+        assertThrows(NullPointerException.class, () ->
+                subscriptionService.deleteSubscription("sub1", null));
+    }
 }
